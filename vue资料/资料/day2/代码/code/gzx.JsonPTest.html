@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <script src="./lib/vue-resource-1.3.4.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+
+<body>
+  <div id="app">
+      <input type="button" value="点击获取" @click="getInfo">
+      
+      <table class="table table-hover table-striped table-bordered" >
+          <thead>
+              <tr>
+                  <th>姓名</th>
+                  <th>年龄</th>
+                  <th>性别</th>
+                  <th>删除</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr v-for="(item,i) in json">
+                  <td>{{item.name}}</td>
+                  <td>{{item.age}}</td>
+                  <td>{{item.gender}}</td>
+                  <td> <a href="" @click.prevent="delFun(i)">删除</a></td>
+              </tr>
+          </tbody>
+      </table>
+      
+    </div>
+  <script>
+    
+    function showInfo123(data) {
+      console.log(data)
+    }
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        json:[],
+      },
+      methods:{
+        getInfo(){
+            this.$http.jsonp('http://127.0.0.1:3000/getscript?callback=showInfo123').then(result => {
+                let name = result.body.name,
+                    age = result.body.age,
+                    gender = result.body.gender;
+                this.json.push({name,age,gender})
+            })
+        },
+        delFun(i){
+            this.json.splice(i,1);
+        }
+      },
+    });
+  </script>
+
+
+<script src=""></script>
+<!-- <script>
+  show()
+</script> -->
+
+</body>
+
+</html>

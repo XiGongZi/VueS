@@ -168,3 +168,4 @@ Vue.component('my-component', {
 //     console.log(112222222)
 // });
 // console.log("ok!!")
+

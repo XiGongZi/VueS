@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue-2.4.0.js"> </script>
+    <script src="./js/vue-router-3.0.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+    
+        .v-enter-active,
+        .v-leave-active {
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+        h3{
+            margin: 0;
+        }
+        #hide{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+<a href="./index.html">jump to index</a>
+
+    <p>路由</p>
+
+
+    <br/>
+
+    <div id="hide">
+    <script>    
+    </script>
+        <div id="app3">
+            <div>
+                <input type="button" value="获取元素内容" @click="getElement" />
+                <!-- 使用 ref 获取元素 -->
+                <h1 ref="myh1">ss这是一个大大的H1</h1>
+        
+                <hr>
+                <!-- 使用 ref 获取子组件 -->
+                <my-com ref="mycom"></my-com>
+            </div>
+        </div>
+        <script>
+        Vue.component('my-com', {
+            template: '<h5 ref="kk">这是一个子组件</h5>',
+            data() {
+            return {
+                name: '子组件',
+            }
+            },
+        });
+    
+        // 创建 Vue 实例，得到 ViewModel
+        var vm = new Vue({
+            el: '#app3',
+            data: {},
+            methods: {
+            getElement() {
+                // 通过 this.$refs 来获取元素
+                console.log(this.$refs.myh1.innerText);
+                // 通过 this.$refs 来获取组件
+                console.log(this.$refs.mycom.kkName);
+            }
+            }
+        });
+        </script>
+<!-- ----------------------------- -->
+
+        <div id="app2">
+            <!-- 引用父组件 -->
+            <son @func="getMsg"></son>
+        
+            <!-- 组件模板定义 -->
+            <script type="x-template" id="son">
+                <div>
+                    <input type="button" value="向父组件传值" @click="sendMsg" />
+                </div>
+            </script>
+        </div>
+        <script>
+                // 子组件的定义方式
+                Vue.component('son', {
+                  template: '#son', // 组件模板Id
+                  methods: {
+                    sendMsg() { // 按钮的点击事件
+                      this.$emit('func', 'OK'); // 调用父组件传递过来的方法，同时把数据传递出去
+                    }
+                  }
+                });
+            
+                // 创建 Vue 实例，得到 ViewModel
+                var vm = new Vue({
+                  el: '#app2',
+                  data: {},
+                  methods: {
+                    getMsg(val){ // 子组件中，通过 this.$emit() 实际调用的方法，在此进行定义
+                      alert(val);
+                    }
+                  }
+                });
+              </script>
+
+        
+        <div id="app">
+                <button @click="ran">click to console random number</button>
+                <a href="javascript:void(0)" @click="flag = !flag">click this</a>
+                <br>
+                <keep-alive>
+                    <button-counter @flo-func="func" :key1="msg" v-if="flag"></button-counter> 
+                    <button-counter2 :key1="msg" v-else="flag"></button-counter2>
+                </keep-alive>
+                <br>
+                <!-- <component :key1="msg" id="" :is="kd"></component> -->
+        </div>
+
+    </div>
+</body>
+<!-- <script src="./js/mainComponent.js"></script> -->
+<script>
+    var myMixin = {
+    created: function () {
+        this.hello()
+    },
+    methods: {
+        hello: function () {
+        console.log('hello from mixin!')
+        }
+    }
+    }
+    var Component = Vue.extend({
+        mixins: [myMixin]
+    })
+var component = new Component() // => "hello from mixin!"
+
+    Vue.component('button-counter', {
+
+        data: function () {
+            return {
+                count: 0,
+                str:"from com"
+            }
+        },
+        template: `
+                    <div>
+                        <button v-on:click="count++">{{ key1 }} You clicked me {{ count }} times.</button>
+                        <button @click="sendMsg">向父组件传值</button>
+                        <br/>
+                        <button-counter3 ></button-counter3>
+                        <br/>
+                   </div>
+                  `,
+        props:{
+            "key1":{
+                type:[String],
+                default:"Not a String"
+            }
+        },
+        provide: function () {
+        return {
+            getMap: this.getMap
+        }
+        },
+        methods:{
+            getMap(){
+                console.log("从父组件接受值")
+            },
+            sendMsg() { // 按钮的点击事件
+                this.$emit('flo-func', this.str); // 调用父组件传递过来的方法，同时把数据传递出去
+            }
+        }
+    });
+    Vue.component('button-counter2', {
+        data: function () {
+            return {
+                count: 0,
+                cou2Msg:"this is msg"
+            }
+        },
+        template: `<a>ss</a>`,
+        props:{
+            "key1":{
+                type:[String],
+                default:"Not a String"
+            }
+        },
+
+    })
+    Vue.component('button-counter3', {
+        data: function () {
+            return {
+                count: 0,
+            }
+        },
+        template: `<div > hello，this is zi </div>`,
+        inject: ['getMap'],
+        created(){
+            this.getMap()
+        }
+    })
+
+    let Vm =  new Vue({
+        
+        el:"#app",
+        data:{
+            bp:0,
+            msg:"12",
+            flag:true,
+            kd:"button-counter2",
+            arr:[1,2,3,4,5]
+        },
+        methods:{
+            func(value){
+                console.log(value);
+                this.msg = value;
+            },
+            ran(){
+                this.arr = _.shuffle(this.arr);
+                console.log(this.arr) 
+            }
+        },
+    })
+
+
+</script>
+
+    </html>
