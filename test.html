@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="vm2" >
+      <input type="text" v-model="add1" value="请输入被加数">  +
+     <input type="text" v-model="add2" value="请输入加数">  
+      <input type="button" value="=" @click="calc">
+     <input type="text" v-model="result" >
+    </div>
+</body>
+
+<script src="./vue/main.js"></script>
+
+</html>

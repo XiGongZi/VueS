@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap-3.3.7.css">
+    <script src="./js/vue-2.4.0.js"> </script>
+    <script src="./js/vue-resource-1.3.4.js"> </script>
+    <script src="./js/vue-router-3.0.1.js"> </script>
+    <style>
+      
+    </style>
+</head>
+<body>
+    <div id="tem1">
+        <!-- <a href="#/login">login</a>
+        <a href="#/register">register</a> -->
+        <hr>
+        <router-link to="/login">login</router-link>
+        <router-link :to="kk">register</router-link>
+        <router-view></router-view>
+    </div>
+
+    <template id="trlogin">
+        <div>这是登录</div>
+    </template>
+    <template id="trregister">
+        <div>这是注册{{$route.query.id}}</div>
+    </template>
+</body>
+<script src="./js/路由.js"></script>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/bootstrap.js"></script>
+</html>

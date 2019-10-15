@@ -1,0 +1,34 @@
+a:link {
+    text-decoration: none;
+    color: #F60;
+}
+a:visited {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+a:active {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+.router-link-active{
+    color: #fff;
+    font-weight: 80;
+    font-style: italic;
+    font-size: 18px;
+    text-decoration: underline;
+    background-color: #26ad9c;
+}
+
+.v-enter,
+.v-leave-to {
+opacity: 0;
+transform: translateX(140px);
+}
+
+.v-enter-active,
+.v-leave-active {
+transition: all 0.5s ease;
+}
